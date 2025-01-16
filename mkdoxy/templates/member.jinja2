@@ -5,6 +5,9 @@ implements: True
 ---
 {% filter indent(config.get('indent_level', 0), True) %}
 
+
+{#{{ print_node_content(node) }}#}
+
 # {{node.kind.value|title}} {{node.name_long}}
 {% if node.has_templateparams %}
 **template &lt;{{node.templateparams}}&gt;**
@@ -30,6 +33,31 @@ implements: True
 * `#include {{include}}`
 {% endfor -%}
 {%- endif %}
+
+
+{% if node.has_inheritance_graph %}
+### Inheritance diagram:
+{#{{ node.inheritance_graph }}#}
+<p align="center" markdown>
+    ![alt]({{ node.inheritance_graph }})
+</p>
+{% endif %}
+
+{% if node.has_collaboration_graph %}
+### Collaboration diagram:
+{#{{ node.collaboration_graph }}#}
+<p align="center" markdown>
+    ![alt]({{ node.collaboration_graph }})
+</p>
+{% endif %}
+
+{#{% if node.has_directory_dependency %}#}
+{#### Directory dependency graph:#}
+{#{{ node.directory_dependency }}#}
+{#<p align="center" markdown>#}
+{#    ![alt]({{ node.directory_dependency }})#}
+{#</p>#}
+{#{% endif %}#}
 
 {% if node.has_base_classes %}
 Inherits the following classes:

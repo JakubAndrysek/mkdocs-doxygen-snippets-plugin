@@ -5,11 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a348fe7-ee21-4e06-b8fc-ced5d548a610" name="Changes" comment="Upgrade version">
+      <change afterPath="$PROJECT_DIR$/devdeps.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mkdoxy/project.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates-custom/memDef.jinja2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/main-mkdoxy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/main-mkdoxy.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devdeps.txt" beforeDir="false" afterPath="$PROJECT_DIR$/devdeps.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/usage/advanced.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/usage/advanced.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/usage/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/usage/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdocs.yml" beforeDir="false" afterPath="$PROJECT_DIR$/mkdocs.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdoxy/doxygen.py" beforeDir="false" afterPath="$PROJECT_DIR$/mkdoxy/doxygen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdoxy/doxyrun.py" beforeDir="false" afterPath="$PROJECT_DIR$/mkdoxy/doxyrun.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdoxy/generatorBase.py" beforeDir="false" afterPath="$PROJECT_DIR$/mkdoxy/generatorBase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdoxy/generatorSnippets.py" beforeDir="false" afterPath="$PROJECT_DIR$/mkdoxy/generatorSnippets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdoxy/node.py" beforeDir="false" afterPath="$PROJECT_DIR$/mkdoxy/node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdoxy/plugin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mkdoxy/plugin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdoxy/property.py" beforeDir="false" afterPath="$PROJECT_DIR$/mkdoxy/property.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdoxy/templates/memDef.jinja2" beforeDir="false" afterPath="$PROJECT_DIR$/mkdoxy/templates/memDef.jinja2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mkdoxy/templates/memTab.jinja2" beforeDir="false" afterPath="$PROJECT_DIR$/mkdoxy/templates/memTab.jinja2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,11 +59,14 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/mkdocs.yml" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="20sSF9RtRyYPthPvI9bA0t9QgTh" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -56,33 +75,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.pytest in /.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mkdocs-serve-vPy3.11.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mkdoxy-demo-vPy3.11.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/kuba/Documents/git/kuba/mkdoxy/mkdoxy-base/mkdoxy-main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.mkdocs-build-vPy3.11.executor": "Run",
+    "Python.mkdocs-serve-vPy3.11.executor": "Run",
+    "Python.mkdoxy-demo-vPy3.11.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Merging diagrams-support",
+    "last_opened_file_path": "/Users/kuba/Documents/git/kuba/mkdoxy/mkdoxy-base/mkdoxy-main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/tests/data" />
       <recent name="$PROJECT_DIR$/docs" />
       <recent name="$PROJECT_DIR$/demo" />
       <recent name="$PROJECT_DIR$/docs/snippets" />
+      <recent name="$PROJECT_DIR$/local" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/tests" />
@@ -102,6 +121,29 @@
       <makefile filename="$PROJECT_DIR$/Makefile" target="reviewCode" workingDirectory="" arguments="">
         <envs />
       </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="mkdocs-build-vPy3.11" type="PythonConfigurationType" factoryName="Python">
+      <module name="main-mkdoxy" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="mkdocs" />
+      <option name="PARAMETERS" value="build" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <configuration name="mkdocs-serve-vPy3.11" type="PythonConfigurationType" factoryName="Python">
@@ -251,7 +293,7 @@
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="/opt/homebrew/bin/python3.11" />
       <option name="SDK_NAME" value="Python 3.11" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -267,28 +309,28 @@
       <item itemvalue="Makefile Target.install" />
       <item itemvalue="Makefile Target.reviewCode" />
       <item itemvalue="Python.mkdocs-serve-vPy3.11" />
+      <item itemvalue="Python.mkdocs-build-vPy3.11" />
       <item itemvalue="Python.mkdoxy-demo-vPy3.11" />
       <item itemvalue="Python tests.pytest in /" />
       <item itemvalue="Python tests.Python tests in /Users/kuba/Documents/git/kuba/mkdoxy/mkdoxy-base/mkdoxy-main/local/test_DoxyTageParser.py" />
-      <item itemvalue="Python tests.Python tests for test_DoxyTageParser.Test.test_parse_empty_tag" />
       <item itemvalue="Python tests.Python tests for local.test_DoxyTageParser" />
       <item itemvalue="Python tests.Python tests for local.test_generatorSnippets.TestGeneratorCommand" />
+      <item itemvalue="Python tests.Python tests for test_DoxyTageParser.Test.test_parse_empty_tag" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Makefile Target.reviewCode" />
-        <item itemvalue="Python tests.Python tests for local.test_generatorSnippets.TestGeneratorCommand" />
         <item itemvalue="Python tests.Python tests in /Users/kuba/Documents/git/kuba/mkdoxy/mkdoxy-base/mkdoxy-main/local/test_DoxyTageParser.py" />
+        <item itemvalue="Python tests.Python tests for test_DoxyTageParser.Test.test_parse_empty_tag" />
+        <item itemvalue="Python tests.Python tests for local.test_generatorSnippets.TestGeneratorCommand" />
         <item itemvalue="Python tests.Python tests for local.test_DoxyTageParser" />
-        <item itemvalue="Python tests.Python tests for local.test_DoxyTageParser" />
+        <item itemvalue="Makefile Target.reviewCode" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.17011.127" />
-        <option value="bundled-python-sdk-48aec45f0201-7e9c3bbb6e34-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.17011.127" />
+        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
       </set>
     </attachedChunks>
   </component>
@@ -321,11 +363,11 @@
       <workItem from="1689697868617" duration="13000" />
       <workItem from="1689777262215" duration="704000" />
       <workItem from="1689947020589" duration="1060000" />
-      <workItem from="1712098386110" duration="1897000" />
-      <workItem from="1715438383298" duration="1041000" />
-      <workItem from="1717581109475" duration="752000" />
-      <workItem from="1718485923290" duration="593000" />
-      <workItem from="1718663152075" duration="4811000" />
+      <workItem from="1698879755273" duration="1365000" />
+      <workItem from="1699658775184" duration="2909000" />
+      <workItem from="1703668827399" duration="72000" />
+      <workItem from="1703668910491" duration="944000" />
+      <workItem from="1703669989016" duration="14307000" />
     </task>
     <task id="LOCAL-00001" summary="Optimise code by sourcery.ai">
       <created>1674630349699</created>
@@ -502,15 +544,7 @@
       <option name="project" value="LOCAL" />
       <updated>1689777297262</updated>
     </task>
-    <task id="LOCAL-00026" summary="Upgrade version">
-      <option name="closed" value="true" />
-      <created>1715439268944</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1715439268944</updated>
-    </task>
-    <option name="localTasksCounter" value="27" />
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -555,19 +589,14 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/mkdoxy/generatorAuto.py</url>
-          <line>235</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/mkdoxy/node.py</url>
-          <line>221</line>
+          <line>227</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/mkdoxy/node.py</url>
-          <line>224</line>
+          <line>230</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -577,7 +606,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/mkdoxy/node.py</url>
-          <line>839</line>
+          <line>869</line>
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -601,24 +630,14 @@
           <option name="timeStamp" value="90" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/mkdoxy/doxyrun.py</url>
-          <line>94</line>
-          <option name="timeStamp" value="101" />
+          <url>file://$PROJECT_DIR$/mkdoxy/generatorAuto.py</url>
+          <line>266</line>
+          <option name="timeStamp" value="107" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/mkdoxy/doxyrun.py</url>
-          <line>111</line>
-          <option name="timeStamp" value="102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/tests/test_doxyrun.py</url>
-          <line>14</line>
-          <option name="timeStamp" value="103" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/mkdoxy/generatorBase.py</url>
-          <line>67</line>
-          <option name="timeStamp" value="115" />
+          <url>file://$PROJECT_DIR$/mkdoxy/generatorAuto.py</url>
+          <line>265</line>
+          <option name="timeStamp" value="110" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="jinja2-line">
           <url>file://$PROJECT_DIR$/mkdoxy/templates/relatedPages.jinja2</url>
@@ -629,25 +648,24 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="kind" />
-        <watch expression="self._refid" />
+        <watch expression="node.has_directory_dependency" />
       </configuration>
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/mkdoxy_main$mkdocs_serve_vPy3_11.coverage" NAME="mkdocs-serve-vPy3.11 Coverage Results" MODIFIED="1703688258003" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/mkdoxy_main$snippetsTest_examples.coverage" NAME="snippetsTest-examples Coverage Results" MODIFIED="1683122953058" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests-old" />
     <SUITE FILE_PATH="coverage/mkdoxy_new_templates$mkdocs_serve_vPy3_11.coverage" NAME="mkdocs-serve-vPy3.11 Coverage Results" MODIFIED="1688123597182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/main_mkdoxy$mkdoxy_demo_vPy3_11.coverage" NAME="mkdoxy-demo-vPy3.11 Coverage Results" MODIFIED="1680895787944" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../mkdoxy-demo" />
-    <SUITE FILE_PATH="coverage/main_mkdoxy$snippetsTest_examples.coverage" NAME="snippetsTest-examples Coverage Results" MODIFIED="1681283640299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests-old" />
-    <SUITE FILE_PATH="coverage/mkdoxy_main$mkdoxy_cer_vPy3_11.coverage" NAME="mkdoxy-cer-vPy3.11 Coverage Results" MODIFIED="1712087157586" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../../_other/py/queryosity" />
-    <SUITE FILE_PATH="coverage/mkdoxy_new_templates$mkdoxy_demo_vPy3_11.coverage" NAME="mkdoxy-demo-vPy3.11 Coverage Results" MODIFIED="1688123563232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../mkdoxy-demo" />
-    <SUITE FILE_PATH="coverage/main_mkdoxy$mkdocs_serve_vPy3_11.coverage" NAME="mkdocs-serve-vPy3.11 Coverage Results" MODIFIED="1680351126249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
-    <SUITE FILE_PATH="coverage/mkdoxy_new_templates$.coverage" NAME=" Coverage Results" MODIFIED="1685351058154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/main_mkdoxy$mkdocs_serve_vPy3_9.coverage" NAME="mkdocs-serve-vPy3.9 Coverage Results" MODIFIED="1636834436573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests/files" />
-    <SUITE FILE_PATH="coverage/main_mkdoxy$mkdocs_serve_py3_9.coverage" NAME="mkdocs-serve-py3.9 Coverage Results" MODIFIED="1636834417383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests/files" />
+    <SUITE FILE_PATH="coverage/mkdoxy_main$mkdocs_serve_vPy3_12.coverage" NAME="mkdocs-serve-vPy3.12 Coverage Results" MODIFIED="1718699773056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/mkdoxy_main$mkdocs_build_vPy3_11.coverage" NAME="mkdocs-build-vPy3.11 Coverage Results" MODIFIED="1703686395427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
-    <SUITE FILE_PATH="coverage/mkdoxy_main$pytest_in__.coverage" NAME="pytest in / Coverage Results" MODIFIED="1712098709702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
-    <SUITE FILE_PATH="coverage/mkdoxy_main$mkdoxy_demo_vPy3_11.coverage" NAME="mkdoxy-demo-vPy3.11 Coverage Results" MODIFIED="1715438480635" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../mkdoxy-demo" />
-    <SUITE FILE_PATH="coverage/mkdoxy_main$mkdocs_serve_vPy3_11.coverage" NAME="mkdocs-serve-vPy3.11 Coverage Results" MODIFIED="1715438751307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
+    <SUITE FILE_PATH="coverage/main_mkdoxy$snippetsTest_examples.coverage" NAME="snippetsTest-examples Coverage Results" MODIFIED="1681283640299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests-old" />
+    <SUITE FILE_PATH="coverage/main_mkdoxy$mkdocs_serve_vPy3_9.coverage" NAME="mkdocs-serve-vPy3.9 Coverage Results" MODIFIED="1636834436573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests/files" />
+    <SUITE FILE_PATH="coverage/mkdoxy_new_templates$.coverage" NAME=" Coverage Results" MODIFIED="1685351058154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/main_mkdoxy$mkdocs_serve_py3_9.coverage" NAME="mkdocs-serve-py3.9 Coverage Results" MODIFIED="1636834417383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests/files" />
+    <SUITE FILE_PATH="coverage/mkdoxy_main$mkdoxy_demo_vPy3_11.coverage" NAME="mkdoxy-demo-vPy3.11 Coverage Results" MODIFIED="1703687071320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../mkdoxy-demo" />
+    <SUITE FILE_PATH="coverage/main_mkdoxy$mkdocs_serve_vPy3_11.coverage" NAME="mkdocs-serve-vPy3.11 Coverage Results" MODIFIED="1680351126249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
+    <SUITE FILE_PATH="coverage/mkdoxy_main$pytest_in__.coverage" NAME="pytest in / Coverage Results" MODIFIED="1718699720284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/mkdoxy_new_templates$mkdoxy_demo_vPy3_11.coverage" NAME="mkdoxy-demo-vPy3.11 Coverage Results" MODIFIED="1688123563232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../mkdoxy-demo" />
   </component>
 </project>

@@ -6,6 +6,7 @@ from typing import Dict
 from jinja2 import BaseLoader, Environment, Template
 from jinja2.exceptions import TemplateError
 from mkdocs import exceptions
+from pprint import pformat
 
 import mkdoxy
 from mkdoxy.constants import Kind
@@ -106,10 +107,30 @@ class GeneratorBase:
         @param data (dict): Data to render the template.
         @return (str): Rendered template.
         """
+
+        def print_node_content(node: Node, level=0, max_depth=1):
+            if level > max_depth:
+                return ""  # Stop recursion when max depth is exceeded
+
+            indent = "\n" + "  " * (level * 4) + "- "  # Indentation for better readability
+            # node_representation = f"{indent}Node at Level {level}: {pformat(vars(node))}\n"
+            node_representation = f"{indent}Node at Level {level}: {node.name}\n"
+            # print all attributes of the node
+            for key, value in vars(node).items():
+                if key == "children":
+                    continue
+                node_representation += f"{indent}  {key}: {pformat(value)}\n"
+
+            # Assuming each node has a list or iterable of child nodes in an attribute like `children`
+            for child in getattr(node, "children", []):
+                node_representation += print_node_content(child, level + 1, max_depth)
+
+            return node_representation
+
         try:
             # if self.debug:
             # print('Generating', path) # TODO: add path to data
-            rendered: str = tmpl.render(data)
+            rendered: str = tmpl.render(data, pformat=pformat, vars=vars, print_node_content=print_node_content)
             return rendered
         except TemplateError as e:
             raise Exception(str(e)) from e

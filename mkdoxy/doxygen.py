@@ -1,5 +1,6 @@
 import logging
 import os
+from pathlib import PurePath
 from xml.etree import ElementTree
 
 from mkdoxy.cache import Cache
@@ -12,7 +13,7 @@ log: logging.Logger = logging.getLogger("mkdocs")
 
 
 class Doxygen:
-    def __init__(self, index_path: str, parser: XmlParser, cache: Cache):
+    def __init__(self, index_path: PurePath, parser: XmlParser, cache: Cache):
         self.debug = parser.debug
         path_xml = os.path.join(index_path, "index.xml")
         if self.debug:

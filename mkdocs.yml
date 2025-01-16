@@ -24,10 +24,16 @@ theme:
   icon:
     repo: fontawesome/brands/github
 
+
   palette:
-    - scheme: slate
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       primary: orange
       accent: orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
 
 extra:
   social:
@@ -75,6 +81,12 @@ plugins:
             OPTIMIZE_OUTPUT_JAVA: True
             JAVADOC_AUTOBRIEF: True
             EXTRACT_ALL: True
+
+            GENERATE_HTML: YES
+            HAVE_DOT: YES
+            DOT_IMAGE_FORMAT: jpg
+            # HAVE_DOT: YES
+            UML_LOOK: YES
         animal:
           src-dirs: demo-projects/animal
           full-doc: True
@@ -82,6 +94,12 @@ plugins:
             FILE_PATTERNS: "*.cpp *.h*"
             EXAMPLE_PATH: examples
             RECURSIVE: True
+            GENERATE_HTML: YES
+            HAVE_DOT: YES
+            # DOT_IMAGE_FORMAT: jpg
+            DOT_IMAGE_FORMAT: svg
+            # INTERACTIVE_SVG: YES
+            # UML_LOOK: YES
       save-api: .mkdoxy
       full-doc: True
       debug: False

@@ -64,6 +64,17 @@ class GeneratorAuto:
         with open(os.path.join(self.tempDoxyDir, pathRel), "w", encoding="utf-8") as file:
             file.write(output)
 
+    def save_image(self, path: str, image_source_link: str):
+        # copy image from image_source_link to mkdocs
+        source = os.path.join(self.tempDoxyDir, "html", image_source_link)
+        if not os.path.exists(source):
+            return
+        destination = os.path.join(self.siteDir, self.apiPath, path, image_source_link)
+        os.makedirs(os.path.dirname(destination), exist_ok=True)
+        with open(source, "rb") as fsrc:
+            with open(destination, "wb") as fdst:
+                fdst.write(fsrc.read())
+
     def fullDoc(self, defaultTemplateConfig: dict):
         self.annotated(self.doxygen.root.children, defaultTemplateConfig)
         self.fileindex(self.doxygen.files.children, defaultTemplateConfig)
@@ -246,6 +257,14 @@ class GeneratorAuto:
 
     def member(self, node: Node, config: dict = None):
         path = node.filename
+        refid = node.refid
+
+        if node.has_inheritance_graph:
+            self.save_image(refid, node.inheritance_graph)
+        if node.has_collaboration_graph:
+            self.save_image(refid, node.collaboration_graph)
+        # if node.has_directory_dependency:
+        #     self.save_image(refid, node.directory_dependency)
 
         output = self.generatorBase.member(node, config)
         self.save(path, output)

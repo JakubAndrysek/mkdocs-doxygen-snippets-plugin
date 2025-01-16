@@ -87,6 +87,9 @@ class Node:
         self._initializer = Property.Initializer(self._xml, parser, self._kind)
         self._definition = Property.Definition(self._xml, parser, self._kind)
         self._programlisting = Property.Programlisting(self._xml, parser, self._kind)
+        self._inheritancegraph = Property.InheritanceGraph(self._xml, parser, self._kind)
+        self._collaborationgraph = Property.CollaborationGraph(self._xml, parser, self._kind)
+        # self._directorydependency = Property.DirectoryDependency(self._xml, parser, self._kind)
 
     def __repr__(self):
         return f"Node: {self.name} refid: {self._refid}"
@@ -824,6 +827,30 @@ class Node:
     @property
     def programlisting(self) -> str:
         return self._programlisting.md()
+
+    @property
+    def has_inheritance_graph(self) -> bool:
+        return self._inheritancegraph.has()
+
+    @property
+    def inheritance_graph(self) -> str:
+        return self._inheritancegraph.md()
+
+    @property
+    def has_collaboration_graph(self) -> bool:
+        return self._collaborationgraph.has()
+
+    @property
+    def collaboration_graph(self) -> str:
+        return self._collaborationgraph.md()
+
+    # @property
+    # def has_directory_dependency(self) -> bool:
+    #     return self._directorydependency.has()
+    #
+    # @property
+    # def directory_dependency(self) -> str:
+    #     return self._directorydependency.md()
 
     @property
     def is_resolved(self) -> bool:

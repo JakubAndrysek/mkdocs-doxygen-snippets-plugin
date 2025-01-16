@@ -346,3 +346,52 @@ class Property:
 
         def has(self) -> bool:
             return self.xml.find("programlisting") is not None
+
+    class InheritanceGraph:
+        def __init__(self, xml: Element, parser: XmlParser, kind: Kind):
+            self.xml = xml
+            self.parser = parser
+            self.kind = kind
+            self.refid = self.xml.attrib.get("id") if self.xml is not None else None
+
+        def md(self, plain: bool = False) -> str:
+            return f"{self.refid}__inherit__graph.svg"
+
+        def plain(self) -> str:
+            return self.md(plain=True)
+
+        def has(self) -> bool:
+            return self.kind.is_class() and self.refid is not None and self.xml.find("inheritancegraph") is not None
+
+    class CollaborationGraph:
+        def __init__(self, xml: Element, parser: XmlParser, kind: Kind):
+            self.xml = xml
+            self.parser = parser
+            self.kind = kind
+            self.refid = self.xml.attrib.get("id") if self.xml is not None else None
+
+        def md(self, plain: bool = False) -> str:
+            return f"{self.refid}__coll__graph.svg"
+
+        def plain(self) -> str:
+            return self.md(plain=True)
+
+        def has(self) -> bool:
+            return self.kind.is_class() and self.refid is not None and self.xml.find("collaborationgraph") is not None
+
+    # class DirectoryDependency:
+    #     def __init__(self, xml: Element, parser: XmlParser, kind: Kind):
+    #         self.xml = xml
+    #         self.parser = parser
+    #         self.kind = kind
+    #         self.refid = self.xml.attrib.get("id") if self.xml is not None else None
+    #
+    #     def md(self, plain: bool = False) -> str:
+    #         return f"{self.refid}_dep.svg"
+    #
+    #     def plain(self) -> str:
+    #         return self.md(plain=True)
+    #
+    #     def has(self) -> bool:
+    #         return (self.refid is not None and
+    #                 (self.kind.is_dir()))
