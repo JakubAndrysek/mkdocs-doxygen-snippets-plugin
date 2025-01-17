@@ -103,15 +103,54 @@ class DoxygenRun:
                 "GENERATE_XML": "YES",
                 "RECURSIVE": "YES",
                 "EXAMPLE_PATH": "examples",
-                "SHOW_NAMESPACES": "YES",
-                "GENERATE_HTML": "NO",
-                "GENERATE_LATEX": "NO",
             }
 
-        doxyCfg.update(doxyCfgNew)
-        doxyCfg["INPUT"] = self.doxygenSource
+        # MkDoxy only cares about the XML output. Always override these.
+        overrides = {
+            "GENERATE_XML": "YES",
+            "GENERATE_HTML": "NO",
+            "GENERATE_LATEX": "NO",
+        }
+
+        doxyCfg.update(overrides)
+        doxyCfg["INPUT"] = self.merge_doxygen_input(doxyCfg)
         doxyCfg["OUTPUT_DIRECTORY"] = self.tempDoxyFolder
+        doxyCfg.update(doxyCfgNew)
+
+        if self.doxygenSource and self.doxyConfigFile:
+            log.info(f"Merged `src-dirs` and `INPUT` from `doxy-cfg-file`:\n  INPUT = {doxyCfg['INPUT']}")
+
         return doxyCfg
+
+    def merge_doxygen_input(self, doxyCfg):
+        """! Merge `src-dirs` (if any) with the "INPUT" paths from the `doxy-cfg-file` (if any). Paths are de-duplicated.
+        @details
+        @param doxyCfg: (dict) the current doxygen configuration to merge with.
+        @return: (str) A string containing the relative paths to be set as "INPUT", separated by " ".
+        """
+        doxycfg_input = doxyCfg.get("INPUT", "")
+
+        if not self.doxygenSource or self.doxygenSource == "":
+            return doxycfg_input
+
+        if not doxycfg_input or doxycfg_input == "":
+            return self.doxygenSource
+
+        # `src-dirs` is always relative to the directory containing the `doxy-cfg-file`.
+        abs_run_dir = self.getDoxygenRunFolder().resolve()
+
+        # Make all paths absolute and deduplicate them by pushing into a dictionary.
+
+        # First paths from `src-dirs`. They are relative to the current working directory.
+        abs_path_dict = dict.fromkeys(Path(src_dir).resolve() for src_dir in self.doxygenSource.split(" "))
+        # Now paths from the config file. They are relative to `abs_run_dir`
+        abs_path_dict |= dict.fromkeys(
+            Path.joinpath(abs_run_dir, input_item).resolve() for input_item in doxycfg_input.split(" ")
+        )
+
+        return " ".join(os.path.relpath(abs_path, abs_run_dir) for abs_path in abs_path_dict.keys())
+
+
 
     def is_doxygen_valid_path(self, doxygen_bin_path: str) -> bool:
         """! Check if the Doxygen binary path is valid.
@@ -205,7 +244,7 @@ class DoxygenRun:
                 return str(file.read())
 
         sha1 = hashlib.sha1()
-        srcs = self.doxygenSource.split(" ")
+        srcs = self.doxyCfg["INPUT"].split(" ")
         for src in srcs:
             for path in Path(src).rglob("*.*"):
                 # # Code from https://stackoverflow.com/a/22058673/15411117
@@ -238,6 +277,7 @@ class DoxygenRun:
             stdout=PIPE,
             stdin=PIPE,
             stderr=PIPE,
+            cwd=self.getDoxygenRunFolder(),
         )
         (doxyBuilder.communicate(self.dox_dict2str(self.doxyCfg).encode("utf-8"))[0].decode().strip())
         # log.info(self.destinationDir)
@@ -260,6 +300,17 @@ class DoxygenRun:
         @return: (PurePath) Path to the XML output folder.
         """
         return Path.joinpath(Path(self.tempDoxyFolder), Path("xml"))
+
+    def getDoxygenRunFolder(self):
+        """! Get the working directory to execute Doxygen in. Important to resolve releative paths.
+        @details When a doxygen config file is provided, this is its containing directory. Otherwise it's the current
+          working directory.
+        @return: (Path) Path to the folder to execute Doxygen in.
+        """
+        if not self.doxyConfigFile:
+            return Path.cwd()
+
+        return Path(self.doxyConfigFile).parent
 
 
 # not valid path exception

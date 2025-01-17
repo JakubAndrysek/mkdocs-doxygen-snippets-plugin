@@ -1,5 +1,6 @@
 import logging
 import os
+from pathlib import Path
 
 from mkdocs.structure import files
 
@@ -61,7 +62,10 @@ class GeneratorAuto:
     def save(self, path: str, output: str):
         pathRel = os.path.join(self.apiPath, path)
         self.fullDocFiles.append(files.File(pathRel, self.tempDoxyDir, self.siteDir, self.useDirectoryUrls))
-        with open(os.path.join(self.tempDoxyDir, pathRel), "w", encoding="utf-8") as file:
+
+        fullpath = Path(os.path.join(self.tempDoxyDir, pathRel))
+        fullpath.parent.mkdir(parents=True, exist_ok=True)
+        with open(fullpath, "w", encoding="utf-8") as file:
             file.write(output)
 
     def fullDoc(self, defaultTemplateConfig: dict):

@@ -41,7 +41,17 @@ class Node:
             if self.debug:
                 log.info(f"Loading XML from: {xml_file}")
             self._dirname = os.path.dirname(xml_file)
-            self._xml = ElementTree.parse(xml_file).getroot().find("compounddef")
+            try:
+                self._xml = ElementTree.parse(xml_file).getroot().find("compounddef")
+            # XML may contain invalid characters. Attempt to replace these with valid UTF-8 and try again.
+            except ElementTree.ParseError:
+                print(parent)
+                print("  " + xml_file)
+                with open(xml_file, "rb") as file:
+                    contents = file.read().decode("utf-8", "replace")
+                    # ElementTree.fromstring() gets the root element.
+                    self._xml = ElementTree.fromstring(contents).find("compounddef")
+
             if self._xml is None:
                 raise Exception(f"File {xml_file} has no <compounddef>")
             self._kind = Kind.from_str(self._xml.get("kind"))
@@ -107,13 +117,8 @@ class Node:
                     continue
                 except Exception:
                     pass
-            child = Node(
-                os.path.join(self._dirname, f"{refid}.xml"),
-                None,
-                self.project,
-                self._parser,
-                self,
-            )
+
+            child = self._parse_inner_into_node(refid, innergroup.text)
             child._visibility = Visibility.PUBLIC
             self.add_child(child)
 
@@ -131,24 +136,7 @@ class Node:
                 except Exception:
                     pass
 
-            try:
-                child = Node(
-                    os.path.join(self._dirname, f"{refid}.xml"),
-                    None,
-                    self.project,
-                    self._parser,
-                    self,
-                )
-            except FileNotFoundError:
-                child = Node(
-                    os.path.join(self._dirname, f"{refid}.xml"),
-                    Element("compounddef"),
-                    self.project,
-                    self._parser,
-                    self,
-                    refid=refid,
-                )
-                child._name = innerclass.text
+            child = self._parse_inner_into_node(refid, innerclass.text)
             child._visibility = prot
             self.add_child(child)
 
@@ -162,13 +150,7 @@ class Node:
                 except Exception:
                     pass
 
-            child = Node(
-                os.path.join(self._dirname, f"{refid}.xml"),
-                None,
-                self.project,
-                self._parser,
-                self,
-            )
+            child = self._parse_inner_into_node(refid, innerfile.text)
             child._visibility = Visibility.PUBLIC
             self.add_child(child)
 
@@ -203,13 +185,7 @@ class Node:
                 except Exception:
                     pass
 
-            child = Node(
-                os.path.join(self._dirname, f"{refid}.xml"),
-                None,
-                self.project,
-                self._parser,
-                self,
-            )
+            child = self._parse_inner_into_node(refid, innernamespace.text)
             child._visibility = Visibility.PUBLIC
             self.add_child(child)
 
@@ -239,6 +215,27 @@ class Node:
         # 	log.info(f'programlisting: {para.text}')
         # if para.find('programlisting') is not None:
         # 	self._programlisting = Property.Programlisting(para, self._parser, self._kind)
+
+    def _parse_inner_into_node(self, refid, fallback_name):
+        xml_path = os.path.join(self._dirname, f"{refid}.xml")
+
+        # Not every item inside <compounddef> has a corresponding XML file on disk (it may not be documented). Check
+        # if it does, otherwise, just create leaf "compounddef" element.
+
+        if os.path.exists(xml_path):
+            child = Node(xml_path, None, self.project, self._parser, self)
+        else:
+            child = Node(
+                xml_path,
+                Element("compounddef"),
+                self.project,
+                self._parser,
+                self,
+                refid=refid,
+            )
+            child._name = fallback_name
+
+        return child
 
     def _check_attrs(self):
         prot = self._xml.get("prot")
