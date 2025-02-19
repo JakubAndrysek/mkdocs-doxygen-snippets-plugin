@@ -41,6 +41,7 @@ pip install mkdoxy
 ```
 Development version with all dependencies:
 ```bash
+python -m venv .venv
 python -m pip install mkdoxy ".[dev]"
 ```
 

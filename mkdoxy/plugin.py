@@ -5,53 +5,36 @@ MkDoxy is a MkDocs plugin for generating documentation from Doxygen XML files.
 """
 
 import logging
-from pathlib import Path, PurePath
+from pathlib import Path
 
-from mkdocs import exceptions
-from mkdocs.config import Config, base, config_options
+from mkdocs.config import Config
 from mkdocs.plugins import BasePlugin
-from mkdocs.structure import files, pages
+from mkdocs.structure.files import Files
+from mkdocs.structure.pages import Page
 
 from mkdoxy.cache import Cache
 from mkdoxy.doxygen import Doxygen
-from mkdoxy.doxyrun import DoxygenRun
+from mkdoxy.doxygen_generator import DoxygenGenerator
 from mkdoxy.generatorAuto import GeneratorAuto
 from mkdoxy.generatorBase import GeneratorBase
 from mkdoxy.generatorSnippets import GeneratorSnippets
 from mkdoxy.xml_parser import XmlParser
+from mkdoxy.doxy_config import MkDoxyConfig
 
 log: logging.Logger = logging.getLogger("mkdocs")
-pluginName: str = "MkDoxy"
+plugin_name: str = "MkDoxy"
 
 
-class MkDoxy(BasePlugin):
+class MkDoxy(BasePlugin[MkDoxyConfig]):
     """! MkDocs plugin for generating documentation from Doxygen XML files."""
 
-    # Config options for the plugin
-    config_scheme = (
-        ("projects", config_options.Type(dict, default={})),
-        ("full-doc", config_options.Type(bool, default=True)),
-        ("debug", config_options.Type(bool, default=False)),
-        ("ignore-errors", config_options.Type(bool, default=False)),
-        ("save-api", config_options.Type(str, default="")),
-        ("enabled", config_options.Type(bool, default=True)),
-        (
-            "doxygen-bin-path",
-            config_options.Type(str, default="doxygen", required=False),
-        ),
-    )
-
-    # Config options for each project
-    config_project = (
-        ("src-dirs", config_options.Type(str)),
-        ("full-doc", config_options.Type(bool, default=True)),
-        ("debug", config_options.Type(bool, default=False)),
-        # ('ignore-errors', config_options.Type(bool, default=False)),
-        ("api-path", config_options.Type(str, default=".")),
-        ("doxy-cfg", config_options.Type(dict, default={}, required=False)),
-        ("doxy-cfg-file", config_options.Type(str, default="", required=False)),
-        ("template-dir", config_options.Type(str, default="", required=False)),
-    )
+    def __init__(self):
+        self.generator_base: dict[str, GeneratorBase] = {}
+        self.doxygen: dict[str, Doxygen] = {}
+        self.default_template_config = {
+            "indent_level": 0,
+        }
+        # check deprecated config here
 
     def is_enabled(self) -> bool:
         """! Checks if the plugin is enabled
@@ -60,145 +43,107 @@ class MkDoxy(BasePlugin):
         """
         return self.config.get("enabled")
 
-    def on_files(self, files: files.Files, config: base.Config) -> files.Files:
+    def on_files(self, files: Files, config: Config) -> Files:
         """! Called after files have been gathered by MkDocs.
-        @details
+        @details generate automatic documentation and append files in the list of files to be processed by mkdocs
 
         @param files: (Files) The files gathered by MkDocs.
         @param config: (Config) The global configuration object.
         @return: (Files) The files gathered by MkDocs.
         """
-        if not self.is_enabled():
-            return files
+        for project_name, project_config in self.config.projects.items():
+            log.info(f"-> Processing project '{project_name}'")
 
-        def checkConfig(config_project, proData, strict: bool):
-            cfg = Config(config_project, "")
-            cfg.load_dict(proData)
-            errors, warnings = cfg.validate()
-            for config_name, warning in warnings:
-                log.warning(f"  -> Config value: '{config_name}' in project '{project_name}'. Warning: {warning}")
-            for config_name, error in errors:
-                log.error(f"  -> Config value: '{config_name}' in project '{project_name}'. Error: {error}")
-
-            if len(errors) > 0:
-                raise exceptions.Abort(f"Aborted with {len(errors)} Configuration Errors!")
-            elif strict and len(warnings) > 0:
-                raise exceptions.Abort(f"Aborted with {len(warnings)} Configuration Warnings in 'strict' mode!")
-
-        def tempDir(siteDir: str, tempDir: str, projectName: str) -> str:
-            tempDoxyDir = PurePath.joinpath(Path(siteDir), Path(tempDir), Path(projectName))
-            tempDoxyDir.mkdir(parents=True, exist_ok=True)
-            return str(tempDoxyDir)
-
-        self.doxygen = {}
-        self.generatorBase = {}
-        self.projects_config: dict[str, dict[str, any]] = self.config["projects"]
-        self.debug = self.config.get("debug", False)
-
-        # generate automatic documentation and append files in the list of files to be processed by mkdocs
-        self.defaultTemplateConfig: dict = {
-            "indent_level": 0,
-        }
-
-        log.info(f"Start plugin {pluginName}")
-
-        for project_name, project_data in self.projects_config.items():
-            log.info(f"-> Start project '{project_name}'")
-
-            # Check project config -> raise exceptions
-            checkConfig(self.config_project, project_data, config["strict"])
-
-            if self.config.get("save-api"):
-                tempDirApi = tempDir("", self.config.get("save-api"), project_name)
+            # Generate Doxygen and MD files to user defined folder or default temp folder
+            if self.config.custom_api_folder:
+                temp_doxy_folder = Path.joinpath(Path(self.config.custom_api_folder), Path(project_name))
             else:
-                tempDirApi = tempDir(config["site_dir"], "assets/.doxy/", project_name)
+                temp_doxy_folder = Path.joinpath(Path(config["site_dir"]), Path("assets/.doxy"), Path(project_name))
+
+            # Create temp dir for Doxygen if not exists
+            temp_doxy_folder.mkdir(parents=True, exist_ok=True)
 
             # Check src changes -> run Doxygen
-            doxygenRun = DoxygenRun(
-                self.config["doxygen-bin-path"],
-                project_data.get("src-dirs"),
-                tempDirApi,
-                project_data.get("doxy-cfg", {}),
-                project_data.get("doxy-cfg-file", ""),
+            doxygen = DoxygenGenerator(
+                self.config,
+                project_config,
+                temp_doxy_folder,
             )
-            if doxygenRun.checkAndRun():
-                log.info("  -> generating Doxygen files")
+            if doxygen.has_changes():
+                log.info("  -> Generating Doxygen files started")
+                doxygen.run()
+                log.info("  -> Doxygen files generated")
             else:
-                log.info("  -> skip generating Doxygen files (nothing changes)")
+                log.info("  -> skip generating Doxygen files (nothing seems to have changed)")
 
             # Parse XML to basic structure
             cache = Cache()
-            parser = XmlParser(cache=cache, debug=self.debug)
+            parser = XmlParser(cache=cache, debug=self.config.debug)
 
             # Parse basic structure to recursive Nodes
-            self.doxygen[project_name] = Doxygen(doxygenRun.getOutputFolder(), parser=parser, cache=cache)
+            # TODO: Doxygen index_path should be Path object
+            self.doxygen[project_name] = Doxygen(str(doxygen.get_output_xml_folder()), parser=parser, cache=cache)
 
             # Print parsed files
-            if self.debug:
+            if self.config.debug:
                 self.doxygen[project_name].printStructure()
 
             # Prepare generator for future use (GeneratorAuto, SnippetGenerator)
-            self.generatorBase[project_name] = GeneratorBase(
-                project_data.get("template-dir", ""),
-                ignore_errors=self.config["ignore-errors"],
-                debug=self.debug,
+            self.generator_base[project_name] = GeneratorBase(
+                project_config.custom_template_dir,
+                False,  # ignore_errors=self.config.ignore_errors,
+                debug=self.config.debug,
             )
 
-            if self.config["full-doc"] and project_data.get("full-doc", True):
+            if self.config.full_doc and project_config.full_doc:
                 generatorAuto = GeneratorAuto(
-                    generatorBase=self.generatorBase[project_name],
-                    tempDoxyDir=tempDirApi,
+                    generatorBase=self.generator_base[project_name],
+                    tempDoxyDir=str(temp_doxy_folder),
                     siteDir=config["site_dir"],
-                    apiPath=project_data.get("api-path", project_name),
+                    apiPath=project_name,
                     doxygen=self.doxygen[project_name],
                     useDirectoryUrls=config["use_directory_urls"],
                 )
 
-                project_config = self.defaultTemplateConfig.copy()
-                project_config.update(project_data)
-                generatorAuto.fullDoc(project_config)
+                template_config = self.default_template_config.copy()
 
-                generatorAuto.summary(project_config)
+                # Generate full documentation
+                generatorAuto.fullDoc(template_config)
 
+                # Generate summary pages
+                generatorAuto.summary(template_config)
+
+                # Append files to be processed by MkDocs
                 for file in generatorAuto.fullDocFiles:
                     files.append(file)
         return files
 
-    def on_page_markdown(
-        self,
-        markdown: str,
-        page: pages.Page,
-        config: base.Config,
-        files: files.Files,
-    ) -> str:
+    def on_page_markdown(self, markdown: str, page: Page, config: Config, files: Files) -> str:
         """! Generate snippets and append them to the markdown.
         @details
-
-        @param markdown (str): The markdown.
-        @param page (Page): The MkDocs page.
-        @param config (Config): The MkDocs config.
-        @param files (Files): The MkDocs files.
-        @return: (str) The markdown.
+        @param markdown: (str) The markdown content of the page.
+        @param page: (Page) The page object.
+        @param config: (Config) The global configuration object.
+        @param files: (Files) The files gathered by MkDocs.
+        @return: (str) The markdown content of the page.
         """
-        if not self.is_enabled():
-            return markdown
 
-        # update default template config with page meta
-        page_config = self.defaultTemplateConfig.copy()
+        # update default template config with page meta tags
+        page_config = self.default_template_config.copy()
         page_config.update(page.meta)
 
-        generatorSnippets = GeneratorSnippets(
+        generator_snippets = GeneratorSnippets(
             markdown=markdown,
-            generatorBase=self.generatorBase,
+            generatorBase=self.generator_base,
             doxygen=self.doxygen,
-            projects=self.projects_config,
+            projects=self.config.projects,
             useDirectoryUrls=config["use_directory_urls"],
             page=page,
             config=page_config,
-            debug=self.debug,
+            debug=self.config.debug,
         )
 
-        return generatorSnippets.generate()
+        return generator_snippets.generate()
 
 
 # def on_serve(self, server):

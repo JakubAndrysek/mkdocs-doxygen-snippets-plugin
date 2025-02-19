@@ -26,7 +26,7 @@ def import_dev_requirements():
 # https://pypi.org/project/mkdoxy/
 setup(
     name="mkdoxy",
-    version="1.2.7",
+    version="2.0.0",
     description="MkDoxy → MkDocs + Doxygen = easy documentation generator with code snippets",
     long_description=readme(),
     long_description_content_type="text/markdown",
@@ -54,9 +54,15 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Operating System :: OS Independent",
     ],
     packages=find_packages(),
     package_data={"mkdoxy": ["templates/*.jinja2"]},
-    entry_points={"mkdocs.plugins": ["mkdoxy = mkdoxy.plugin:MkDoxy"]},
+    entry_points={
+        "mkdocs.plugins": ["mkdoxy = mkdoxy.plugin:MkDoxy"],
+        # folder mkdoxy/cli.py
+        # "console_scripts": ["mkdoxy = mkdoxy.cli:cli"],
+        "console_scripts": ["mkdoxy = mkdoxy.__main__:main"],
+    },
 )

@@ -289,3 +289,5 @@ tests/files/.mkdoxy
 .mkdoxy/
 temp/
 local/
+
+.idea/

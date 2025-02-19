@@ -24,7 +24,7 @@ jobs:
           python -m pip install -e ".[dev]"
           sudo apt-get install doxygen
       - name: Clone test repo
-        run: git clone https://github.com/JakubAndrysek/MkDoxy-demo.git demo
+        run: git clone --branch core-update https://github.com/JakubAndrysek/MkDoxy-demo.git demo
       - name: Build docs
         run: |
           cd demo

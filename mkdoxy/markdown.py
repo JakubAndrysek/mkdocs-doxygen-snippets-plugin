@@ -6,7 +6,7 @@ def escape(s: str) -> str:
     ret = ret.replace("_", "\\_")
     ret = ret.replace("<", "&lt;")
     ret = ret.replace(">", "&gt;")
-    return ret.replace("|", "\|")
+    return ret.replace("|", "\\|")
 
 
 class MdRenderer:

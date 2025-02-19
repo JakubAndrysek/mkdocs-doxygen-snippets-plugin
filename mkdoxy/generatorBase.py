@@ -8,7 +8,7 @@ from jinja2.exceptions import TemplateError
 from mkdocs import exceptions
 
 import mkdoxy
-from mkdoxy.constants import Kind
+from mkdoxy.constants import Kind, JINJA_EXTENSIONS
 from mkdoxy.filters import use_code_language
 from mkdoxy.node import DummyNode, Node
 from mkdoxy.utils import (
@@ -43,12 +43,11 @@ class GeneratorBase:
         environment.filters["use_code_language"] = use_code_language
         # code from https://github.com/daizutabi/mkapi/blob/master/mkapi/core/renderer.py#L29-L38
         path = os.path.join(os.path.dirname(mkdoxy.__file__), "templates")
-        ENDING = (".jinja2", ".j2", ".jinja")
         for fileName in os.listdir(path):
             filePath = os.path.join(path, fileName)
 
             # accept any case of the file ending
-            if fileName.lower().endswith(ENDING):
+            if fileName.lower().endswith(JINJA_EXTENSIONS):
                 with open(filePath, "r") as file:
                     name = os.path.splitext(fileName)[0]
                     fileTemplate, metaData = parseTemplateFile(file.read())
@@ -56,7 +55,7 @@ class GeneratorBase:
                     self.metaData[name] = metaData
             else:
                 log.error(
-                    f"Trying to load unsupported file '{filePath}'. Supported file ends with {ENDING}."
+                    f"Trying to load unsupported file '{filePath}'. Supported file ends with {JINJA_EXTENSIONS}."
                     f"Look at documentation: https://mkdoxy.kubaandrysek.cz/usage/#custom-jinja-templates."
                 )
 
@@ -67,7 +66,7 @@ class GeneratorBase:
             # load custom templates and overwrite default templates - if they exist
             for fileName in os.listdir(templateDir):
                 filePath = os.path.join(templateDir, fileName)
-                if fileName.lower().endswith(ENDING):
+                if fileName.lower().endswith(JINJA_EXTENSIONS):
                     with open(filePath, "r") as file:
                         name = os.path.splitext(fileName)[0]
                         fileTemplate, metaData = parseTemplateFile(file.read())
@@ -76,7 +75,7 @@ class GeneratorBase:
                         log.info(f"Overwriting template '{name}' with custom template.")
                 else:
                     log.error(
-                        f"Trying to load unsupported file '{filePath}'. Supported file ends with {ENDING}."
+                        f"Trying to load unsupported file '{filePath}'. Supported file ends with {JINJA_EXTENSIONS}."
                         f"Look at documentation: https://mkdoxy.kubaandrysek.cz/usage/#custom-jinja-templates."
                     )
 
